@@ -1,11 +1,24 @@
-FROM cloudbees/jnlp-slave-with-java-build-tools:3.0.0
+FROM jenkins/jnlp-slave:latest-jdk11
 
 USER root
 
-RUN curl https://storage.googleapis.com/kubernetes-release/release/v1.20.7/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
+RUN apt-get update -qqy \
+  && apt-get -qqy --no-install-recommends install \
+    dnsutils iputils-ping telnet\
+    openssh-client ssh-askpass\
+    ca-certificates \
+    tar zip unzip \
+    wget curl \
+    git \
+    build-essential \
+    less nano tree \
+    python python-pip python2 groff python3-distutils\
+    rlwrap \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get -qq install python2 && apt-get clean
-
-RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && python2 get-pip.py && rm -f  get-pip.py
-
-USER jenkins
+RUN pip install --upgrade pip setuptools \
+  && curl https://bootstrap.pypa.io/pip/get-pip.py --output get-pip.py && python3 get-pip.py && rm -f get-pip.py \
+  && pip3 install jenkins-job-builder  \
+  && curl -sL https://deb.nodesource.com/setup_14.x | bash && apt-get install -y nodejs \
+  && curl https://storage.googleapis.com/kubernetes-release/release/v1.20.7/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
+    
