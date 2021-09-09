@@ -22,3 +22,4 @@ RUN pip install --upgrade pip setuptools \
   && curl -sL https://deb.nodesource.com/setup_14.x | bash && apt-get install -y nodejs \
   && curl https://storage.googleapis.com/kubernetes-release/release/v1.20.7/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
     
+USER jenkins
