@@ -1,4 +1,4 @@
-FROM jenkins/jnlp-slave:latest-jdk11
+FROM cloudbees/jnlp-slave-with-java-build-tools:3.0.0
 
 USER root
 
