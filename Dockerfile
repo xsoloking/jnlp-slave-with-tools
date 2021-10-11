@@ -4,8 +4,8 @@ USER root
 
 RUN apt-get update -qqy \
   && apt-get -qqy --no-install-recommends install \
-    dnsutils iputils-ping telnet\
-    openssh-client ssh-askpass\
+    dnsutils iputils-ping telnet \
+    openssh-client ssh-askpass sshpass rsync \
     ca-certificates \
     tar zip unzip \
     wget curl \
